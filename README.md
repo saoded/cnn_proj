@@ -1,8 +1,9 @@
 # CNN Final Project
 Genre Classification of Songs using CNN (2014 Academic Research Project)
 Created by my partner, Nir Mahlab, and myslef, Oded Sayar.
-Instructed by Elad Hoffer, an true expert in the subject, in the Signal & Image Processing Laboratory (SIPL) in the Technion, Israeli Institute of Technology
-My source code was uploaded for hosting and sharing, feel free to look at it and use it, but I won't support it or guarantee its work on your system
+Instructed by Elad Hoffer, an true expert in the subject, in the Signal & Image Processing Laboratory (SIPL) in the Technion, Israeli Institute of Technology.
+
+I uploaded my source code for hosting and sharing, feel free to look at it and use it, but I won't support it or guarantee its work on your system
 
 ## Neural Network Solution
 A network of perceptrons connected together in multiple layers (hence MLP - multilayered perceptron)
