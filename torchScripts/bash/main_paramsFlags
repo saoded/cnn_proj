@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# $1 = number of classes to choose 		(nClass)
+# $2 = input type (mfcc/raw) 			(-type_input)
+# $3 = classing type (genre/artist) 		(-type_class)
+# $4 = maximum number of songs for each class 	(-maxInput)
+# $5 = number of epoches 			(-nEpoch)
+# $6 = learning rate 				(-LR)
+# $7 = LR Decay 				(-LRDecay)
+# $8 = momentum 				(-momentum)
+# $9 = network file 				(-network)
+# $10 = test? 					(-TEST)
+
+if (( $# == 0 )); then
+	echo "th ../UI.lua -nClasses 5 -maxInput 100"
+fi
+
+#if (( $# == 1 )) && [ $1 == test ]; then
+#	echo "th ../UI.lua -nClasses 3 -maxInput 10 -TEST true"
+#fi
+
+
+
+echo "th ../UI.lua -type_class $4 -type_input $3 -nClasses $2$classesString"

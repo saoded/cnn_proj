@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [[ $@ == *"~"* ]]
+then
+	initial=$(echo $@ | cut -d"~" -f1 | rev | cut -d" " -f1 | rev)
+	final=$(echo $@ | cut -d"~" -f2 | cut -d" " -f1)
+	step=$(echo "$final-$initial" | bc -l)
+	step=$(echo "$step/10" | bc -l)
+
+	while (( $(echo "$initial <= $final" | bc -l) ))
+	do
+		command=$(echo $@ | cut -d"~" -f1 | rev | cut -d" " -f2- | rev )
+		command="$command $initial"
+		command="$command $(echo $@ | cut -d"~" -f2- | cut -d" " -f2-)"
+		bash 'bash/run_all_permutations' $command
+		initial=$(echo "$initial+$step" | bc -l)
+	done
+	
+else
+	$@
+fi

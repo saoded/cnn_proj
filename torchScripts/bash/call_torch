@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# run example
+# $ bash call_torch lr 2~4 lrd 0.1~1 artists mfcc class 34 class 55 lrd agea save odedi
+
+
+classIND=1
+
+command="th UI.lua"
+
+while test $# -gt 0
+do
+    case "$1" in
+        "test") echo "-TEST true"
+            ;;
+        "momentum"|"network"|"nClasses"|"load"|"save"|"nEpoch"|"batch_size") command="$command -$1 $2" ; shift
+            ;;
+        "lr") command="$command -LR $2" ; shift
+            ;;
+        "lrd") command="$command -LRDecay $2" ; shift
+            ;;
+        "artists"|"genres") command="$command -type_class $1"
+            ;;
+        "mfcc"|"raw") command="$command -type_input $1"
+            ;;
+        "class") command="$command -$1$classIND $2"; classIND=$[$classIND+1] ; shift
+            ;;
+        "max") command="$command -maxInput $2" ; shift
+            ;;
+#        --*) echo "bad option $1"
+#            ;;
+        *) echo "bad option $1"
+            ;;
+    esac
+    shift
+done
+
+bash 'bash/run_all_permutations' $command
+
+# echo "th ../UI.lua $command"

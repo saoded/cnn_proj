@@ -1,0 +1,83 @@
+#!/bin/bash
+
+# $1 = class list filename
+# $2 = number of classes to choose
+# $3 = input type (mfcc/raw) ######## UNUSED
+# $4 = classing type (genre/Artists) # UNUSED
+
+# STEP 1: create 2 arrays:
+#	lineNum		- number of the line
+#	className	- names of classes
+#	nSongs 		- number of songs in each class
+
+flagRightClassType=0
+currInd=0
+while IFS='' read -r line
+do
+	nWords=$(echo $line | wc --word)
+	if [ $nWords -eq 1 ]
+	then
+		if [ $line == $4':' ]
+		then
+			flagRightClassType=1
+		else
+			flagRightClassType=0
+		fi
+	fi
+	if [ $nWords -gt 1 ] && [ $flagRightClassType -eq 1 ]
+	then
+		lineNum[$currInd]=$(echo $line | cut -d" " -f1)
+		className[$currInd]=$(echo $line | cut -d" " -f2-$[$nWords-1])
+		nSongs[$currInd]=$(echo $line | cut -d" " -f$nWords)
+		currInd=$[$currInd+1]
+	fi
+done < "$1"
+
+# STEP 2: sort the array, get the thresh
+
+nSongsSORTED=( $(
+    for el in "${nSongs[@]}"
+    do
+        echo "$el"
+    done | sort -r -n) )
+# "-r" so greatest are first, "-n" for numeric sorting (rather than lexical)
+nSongsThreshold=$[nSongsSORTED[$2]]
+
+# STEP 3: decide how many classes with the same amount of songs as the threshold should be taken
+
+nEquals=-1
+for i in `seq 0 $2`;
+do
+	if [ $[nSongsSORTED[$i]] -eq $nSongsThreshold ]
+	then
+		nEquals=$[$nEquals+1]
+	fi
+done 
+
+# STEP 4: print only the classes with most songs
+
+
+tmpInd=0
+classesString=""
+for i in `seq 0 $currInd`;
+do
+	if [ $[nSongs[$i]] -gt $nSongsThreshold ]
+	then
+		echo "$[$i+1] ${className[$i]} $[nSongs[$i]]"
+#		echo "${lineNum[$i]} ${className[$i]} $[nSongs[$i]]"
+#		lineNums[$tmpInd]=lineNum[$i]
+		tmpInd=$[$tmpInd+1]
+		classesString+=" -class$[$tmpInd] ${lineNum[$i]}"
+	fi
+	
+	if [ $[nSongs[$i]] -eq $nSongsThreshold ] && [ $nEquals -gt 0 ]
+	then
+		nEquals=$[$nEquals-1]
+
+#		lineNums[$tmpInd]=lineNum[$i]
+		tmpInd=$[$tmpInd+1]
+		classesString+=" -class$[$tmpInd] ${lineNum[$i]}"
+	fi
+done
+
+echo "th -i pass_args.lua -type_class $4 -type_input $3 -nClasses $2$classesString"
