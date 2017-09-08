@@ -23,6 +23,7 @@ Layers:
 - Batch normalization - for convergence speedup. Proved very useful
 - Non-linear element: ReLU - for efficient gradient propagation
 - Log-Softmax - final layer, calculate matching rate between a song and the genre/artist, take best-matching genre
+
 Optimization:
 - Log likelihood
 - Backpropagation & SGD
@@ -38,8 +39,8 @@ A DB of over 10 thousand songs. divided to 90% training set and 10% testing set.
 - Songs per artist, K (avoid bias toward artist)
 
 ### The Input
-This projects contains a comparison between using MFCC as input, a standard audio feature set, and using raw wav data as input.
-since MFCC are 16 coefficients assinged to each audio interval, a fair comparison would mean adding to the raw-input network a first layer with 16 units
+This projects contains a comparison between using MFCC preprocessing as input, and using raw wav data as input. MFCC is a standard audio feature set, used in wide range of audio processing applications, modeled after the human auditory system.
+Since MFCC are 16 coefficients assinged to each audio interval, a fair comparison would mean adding to the raw-input network a first layer with 16 units
 
 ### The Output
 - The classified genre
