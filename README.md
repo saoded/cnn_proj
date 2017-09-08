@@ -1,4 +1,4 @@
-# cnn_proj
+# CNN Final Project
 Genre Classification of Songs using CNN (2014 Academic Research Project)
 
 ## Neural Network Solution
@@ -32,7 +32,7 @@ Optimization:
 A DB of over 10 thousand songs. divided to 90% training set and 10% testing set. test set is expanded with songs by artists that aren't in the training set
 - Number of genres, M=5
 - Number of Artists, N=15 (3 per genre to avoid bias)
--- It was difficult to find a DB with genre tags per song, we setteled for genre tag per artist (may have influenced the netwiork)
+-- It was difficult to find a DB with genre tags per song, we setteled for genre tag per artist (influences the netwiork)
 - Songs per artist, K (avoid bias toward artist)
 
 ### The Input
@@ -50,3 +50,5 @@ since MFCC are 16 coefficients assinged to each audio interval, a fair compariso
 
 ### Results
 - 96.67% correctness on the test set genre
+- An equivalent CNN using MFCC as preprocessing gave way worse results, 70.7% correctness
+- Surprisingly, increasing the number of genres improved correctness rate, as the machine got better understanding of the problem in general (by learning more nuanced features)
