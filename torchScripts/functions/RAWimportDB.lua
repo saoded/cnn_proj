@@ -10,13 +10,13 @@ require "audio"
 --------Manually Change------------------------------------------------
 mat_folder = '../DB/'
 ---------------------------------------------------------------
-xtot_num={}
-xtot ={}
-input_train_inds ={}
+xtot_num = {}
+xtot = {}
+input_train_inds = {}
 for i=1,args.nClasses do
-	xtot_num[i] =i;
+	xtot_num[i] = i;
 	xtot[i] = i;
-	input_train_inds[i]=i
+	input_train_inds[i] = i
 end
 
 local train_test_buffer = torch.IntTensor(args.nClasses) 
